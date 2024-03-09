@@ -1,14 +1,10 @@
 package mx.unam.fi.corrutinasapp.ui.views
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -31,8 +27,9 @@ import mx.unam.fi.corrutinasapp.viewmodel.MainViewModel
 
 @Composable
 fun CoroutinesApp(
-        viewModel: MainViewModel = MainViewModel(),
-        modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = MainViewModel()
+
     ){
     var changeColor by remember{
         mutableStateOf(false)
@@ -86,7 +83,7 @@ fun CoroutinesApp(
     }
 }
 
-@Preview()
+@Preview
 @Composable
 fun CoroutinesAppPreview(){
     CorrutinasAppTheme {

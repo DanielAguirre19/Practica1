@@ -1,6 +1,7 @@
 package mx.unam.fi.corrutinasapp.viewmodel
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -17,10 +18,10 @@ class MainViewModel: ViewModel(){
     var resultState2 by mutableStateOf(false)
         private set
 
-    var countTime by mutableStateOf(0)
+    var countTime by mutableIntStateOf(0)
         private set
 
-    var countTime2 by mutableStateOf(0)
+    var countTime2 by mutableIntStateOf(0)
         private set
 
 
