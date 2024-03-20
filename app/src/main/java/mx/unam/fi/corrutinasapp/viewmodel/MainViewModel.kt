@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import mx.unam.fi.corrutinasapp.ui.views.CoroutinesApp
 
 
 class MainViewModel: ViewModel(){
@@ -19,6 +20,13 @@ class MainViewModel: ViewModel(){
     var countTime by mutableIntStateOf(0)
         private set
 
+    var countTime2 by mutableIntStateOf(0)
+        private set
+
+    var countTime3 by mutableIntStateOf(0)
+        private set
+
+    var N = 0
 
 
     private var oneCount by mutableStateOf(false)
@@ -34,10 +42,33 @@ class MainViewModel: ViewModel(){
             }
             oneCount = true
         }
-
         if(oneCount){
             job?.cancel()
         }
-    }
 
+
+        job = viewModelScope.launch {
+            for (i in 1..5){
+                delay(1000)
+                countTime2 = i*2
+            }
+            oneCount = true
+        }
+        if(oneCount){
+            job?.cancel()
+        }
+
+
+        job = viewModelScope.launch {
+            for (i in 1..5){
+                delay(1000)
+                countTime3 = i*3
+            }
+            oneCount = true
+        }
+        if(oneCount){
+            job?.cancel()
+        }
+
+    }
 }

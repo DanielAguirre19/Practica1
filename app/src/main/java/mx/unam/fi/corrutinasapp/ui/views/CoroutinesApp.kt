@@ -27,7 +27,7 @@ import mx.unam.fi.corrutinasapp.R
 import mx.unam.fi.corrutinasapp.ui.theme.CorrutinasAppTheme
 import mx.unam.fi.corrutinasapp.viewmodel.MainViewModel
 
-
+var N = 2
 @Composable
 fun CoroutinesApp(
     modifier: Modifier = Modifier,
@@ -39,6 +39,8 @@ fun CoroutinesApp(
     }
     var contador by remember { mutableStateOf(0) }
     var isContando by remember { mutableStateOf(false) }
+
+
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -59,11 +61,13 @@ fun CoroutinesApp(
         Column(horizontalAlignment = Alignment.CenterHorizontally){
             Text(text = "Contador Síncrono", fontWeight = FontWeight.Bold, fontSize = 25.sp)
             Spacer(modifier = modifier.height(10.dp))
-            if (viewModel.resultState){
-                Text(text = "${viewModel.countTime} [s]", fontSize = 22.sp, color = Color.Red)
-            }else{
-                Text(text = "${viewModel.countTime} [s]", fontSize = 22.sp)
-            }
+
+            Text(text = "Cont1: ${viewModel.countTime} [s]", fontSize = 22.sp)
+            Text(text = "Cont2: ${viewModel.countTime2} [s]", fontSize = 22.sp)
+            Text(text = "Cont3: ${viewModel.countTime3} [s]", fontSize = 22.sp)
+
+
+
 
             Spacer(modifier = modifier.height(30.dp))
 
@@ -82,16 +86,18 @@ fun CoroutinesApp(
 
         }
 
-
         Button(onClick = {
             if (!isContando) {
-                isContando = true
-                for (i in 0..5) {
-                    contador = i
-                    Thread.sleep(1000)
+                while (N < 3){
+                    isContando = true
+                    for (i in 0..5) {
+                        contador = i
+                        Thread.sleep(1000)
+                    }
+                    N++
                 }
-                isContando = false
             }
+            isContando = false
         })
         {
             Text(text = stringResource(R.string.detener_contadores))
