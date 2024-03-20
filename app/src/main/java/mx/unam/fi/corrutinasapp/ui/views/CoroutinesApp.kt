@@ -10,6 +10,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,9 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import mx.unam.fi.corrutinasapp.R
 import mx.unam.fi.corrutinasapp.ui.theme.CorrutinasAppTheme
 import mx.unam.fi.corrutinasapp.viewmodel.MainViewModel
+
 
 @Composable
 fun CoroutinesApp(
@@ -34,6 +37,8 @@ fun CoroutinesApp(
     var changeColor by remember{
         mutableStateOf(false)
     }
+    var contador by remember { mutableStateOf(0) }
+    var isContando by remember { mutableStateOf(false) }
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -52,7 +57,7 @@ fun CoroutinesApp(
         //Text(text = viewModel.resultState)
         Spacer(modifier = modifier.height(30.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally){
-            Text(text = "Contador 1", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+            Text(text = "Contador Síncrono", fontWeight = FontWeight.Bold, fontSize = 25.sp)
             Spacer(modifier = modifier.height(10.dp))
             if (viewModel.resultState){
                 Text(text = "${viewModel.countTime} [s]", fontSize = 22.sp, color = Color.Red)
@@ -60,28 +65,41 @@ fun CoroutinesApp(
                 Text(text = "${viewModel.countTime} [s]", fontSize = 22.sp)
             }
 
-
             Spacer(modifier = modifier.height(30.dp))
 
-            Text(text = "Contador 2", fontWeight = FontWeight.Bold, fontSize = 25.sp)
-            Spacer(modifier = modifier.height(10.dp))
-            if (viewModel.resultState2){
-                Text(text = "${viewModel.countTime2} [s]", fontSize = 22.sp, color = Color.Red)
-            }else{
-                Text(text = "${viewModel.countTime2} [s]", fontSize = 22.sp)
-            }
         }
 
-        Spacer(modifier = modifier.height(30.dp))
         Button(onClick = {viewModel.fetchData()}) {
             Text(text = stringResource(R.string.realizar_consulta))
         }
         Spacer(modifier = modifier.height(10.dp))
-        Button(onClick = {viewModel.reset()}) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally){
+            Text(text = "Contador Asíncrono", fontWeight = FontWeight.Bold, fontSize = 25.sp)
+            Spacer(modifier = modifier.height(10.dp))
+
+            Text(text = "${contador} [s]", fontSize = 22.sp, color = Color.Red)
+            Spacer(modifier = modifier.height(30.dp))
+
+        }
+
+
+        Button(onClick = {
+            if (!isContando) {
+                isContando = true
+                for (i in 0..5) {
+                    contador = i
+                    Thread.sleep(1000)
+                }
+                isContando = false
+            }
+        })
+        {
             Text(text = stringResource(R.string.detener_contadores))
         }
+
     }
 }
+
 
 @Preview
 @Composable
